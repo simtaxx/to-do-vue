@@ -1,4 +1,12 @@
 @font-face {
-  font-family: "";
-  src: url("") format();
+  font-family: "RobotoLight";
+  src: url("../fonts/roboto-light.woff") format('woff');
+}
+@font-face {
+  font-family: "RobotoRegular";
+  src: url("../fonts/roboto-regular.woff") format('woff');
+}
+@font-face {
+  font-family: "RobotoBold";
+  src: url("../fonts/roboto-bold.woff") format('woff');
 }

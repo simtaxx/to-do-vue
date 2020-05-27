@@ -1,7 +1,44 @@
 // IMPORT FONTS
 
-%fontName {
-  font-family: '';
+%RobotoLight {
+  font-family: 'RobotoLight', sans-serif;
+}
+
+%RobotoRegular {
+  font-family: 'RobotoRegular', sans-serif;
+}
+
+%RobotoBold {
+  font-family: 'RobotoBold', sans-serif;
 }
 
 // CLASSES
+
+h1 {
+  @extend %RobotoBold;
+  font-size: 24px;
+  text-align: center;
+  padding: 20px 0;
+  color: rgb(97, 121, 12);
+}
+
+.inputSubmit {
+  width: 100%;
+  border: 2px solid rgb(130, 161, 16);
+  background-color: white;
+  border-radius: 3px;
+  font-family: 'RobotoBold';
+  font-size: 16px;
+  color:rgb(130, 161, 16);
+  cursor: pointer;
+  transition: .2s;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    color: white;
+    background-color: rgb(130, 161, 16);
+  }
+}
