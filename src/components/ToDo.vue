@@ -1,5 +1,5 @@
 <template>
-  <div :class="isItDone">
+  <div :class="this.isDone ? this.$style.isDone + ' ' + this.$style.toDo : this.$style.toDo">
     <h3 :class="$style.title">{{ content.title }}</h3>
     <p :class="$style.description">{{ content.description }}</p>
     <button class="inputSubmit" @click="isDone = isDone ? false : true">{{ buttonText }}</button>
@@ -20,11 +20,8 @@ export default {
     }
   },
   computed: {
-    isItDone() {
-      return ( this.isDone ? this.$style.isDone + ' ' + this.$style.toDo : this.$style.toDo  )
-    },
     buttonText() {
-      return ( this.isDone ? '✔ DONE' : '✘ NOT DONE' )
+      return this.isDone ? '✔ DONE' : '✘ NOT DONE'
     }
   },
   methods: {

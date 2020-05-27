@@ -3,7 +3,7 @@
     <h1>TO DO LIST</h1>
     <CreateToDo @addTodo="todos.push($event)" />
     <div :class="$style.todosContainer">
-      <ToDo v-for="(todo, index) in todos" :key="index" :content="todo" @getDeleted="deleteThis(index)" />
+      <ToDo v-for="(todo, index) in todos" :key="index" :content="todo" @getDeleted="deleteToDo(index)" />
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
     localStorage.setItem('todos', JSON.stringify(this.todos))
   },
   methods: {
-    deleteThis(index) {
+    deleteToDo(index) {
       this.todos.splice(index, 1)
     }
   }
