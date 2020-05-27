@@ -2,7 +2,7 @@
   <div :class="this.isDone ? this.$style.isDone + ' ' + this.$style.toDo : this.$style.toDo">
     <h3 :class="$style.title">{{ content.title }}</h3>
     <p :class="$style.description">{{ content.description }}</p>
-    <button class="inputSubmit" @click="isDone = isDone ? false : true; updateState()">{{ buttonText }}</button>
+    <button class="inputSubmit" @click="isDone = isDone ? false : true">{{ isDone ? '✔ DONE' : '✘ NOT DONE' }}</button>
     <span :class="$style.close" @click="getDeleted">❌</span>
   </div>
 </template>
@@ -19,17 +19,9 @@ export default {
       isDone: this.content.isDone 
     }
   },
-  computed: {
-    buttonText() {
-      return this.isDone ? '✔ DONE' : '✘ NOT DONE'
-    }
-  },
   methods: {
     getDeleted() {
       this.$emit('getDeleted')
-    },
-    updateState() {
-      this.$emit('updateState')
     }
   }
 }
