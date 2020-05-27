@@ -3,6 +3,7 @@
     <h3 :class="$style.title">{{ content.title }}</h3>
     <p :class="$style.description">{{ content.description }}</p>
     <button class="inputSubmit" @click="isDone = isDone ? false : true">{{ buttonText }}</button>
+    <span :class="$style.close" @click="getDeleted">❌</span>
   </div>
 </template>
 
@@ -25,6 +26,11 @@ export default {
     buttonText() {
       return ( this.isDone ? '✔ DONE' : '✘ NOT DONE' )
     }
+  },
+  methods: {
+    getDeleted() {
+      this.$emit('getDeleted')
+    }
   }
 }
 
@@ -33,6 +39,7 @@ export default {
 <style lang="scss" module>
 
   .toDo {
+  position: relative;
     width: calc(100% - 30px);
     border: 2px solid rgb(130, 161, 16);
     padding: 15px;
@@ -59,7 +66,7 @@ export default {
       color: #fafafa;
     }
 
-    button {
+    button:first {
       border: 2px solid #fafafa;
       background-color: rgb(130, 161, 16);
       color: #fafafa;
@@ -85,5 +92,42 @@ export default {
     margin-bottom: 20px;
     color: rgb(130, 161, 16);
   }
+  
+  .inputDelete {
+  width: 100%;
+  border: 2px solid rgb(152, 41, 33);
+  background-color: rgb(152, 41, 33);
+  border-radius: 3px;
+  font-family: 'RobotoBold';
+  font-size: 16px;
+  color:#fafafa;
+  cursor: pointer;
+  transition: .2s;
+  @include desktop {
+    height: 40px;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    color: rgb(152, 41, 33);
+    background-color: #fafafa;
+  }
+}
+
+.close {
+  opacity: .4;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  transition: .2s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
 
 </style>
