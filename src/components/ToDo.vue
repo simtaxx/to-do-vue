@@ -2,7 +2,7 @@
   <div :class="this.isDone ? this.$style.isDone + ' ' + this.$style.toDo : this.$style.toDo">
     <h3 :class="$style.title">{{ content.title }}</h3>
     <p :class="$style.description">{{ content.description }}</p>
-    <button class="inputSubmit" @click="isDone = isDone ? false : true">{{ buttonText }}</button>
+    <button class="inputSubmit" @click="isDone = isDone ? false : true; updateState()">{{ buttonText }}</button>
     <span :class="$style.close" @click="getDeleted">❌</span>
   </div>
 </template>
@@ -27,6 +27,9 @@ export default {
   methods: {
     getDeleted() {
       this.$emit('getDeleted')
+    },
+    updateState() {
+      this.$emit('updateState')
     }
   }
 }
@@ -63,7 +66,7 @@ export default {
       color: #fafafa;
     }
 
-    button:first {
+    button {
       border: 2px solid #fafafa;
       background-color: rgb(130, 161, 16);
       color: #fafafa;
