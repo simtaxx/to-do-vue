@@ -32,6 +32,9 @@ h1 {
   color:rgb(130, 161, 16);
   cursor: pointer;
   transition: .2s;
+  @include desktop {
+    height: 40px;
+  }
 
   &:focus {
     outline: none;

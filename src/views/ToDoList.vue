@@ -2,8 +2,8 @@
   <div :class="$style.toDoList" class="grid">
     <h1>TO DO LIST</h1>
     <CreateToDo @addTodo="todos.push($event)" />
-    <div v-for="todo in todos" :key="todo.id">
-      <ToDo :content="todo" />
+    <div :class="$style.todosContainer">
+      <ToDo v-for="todo in todos" :key="todo.id" :content="todo" />
     </div>
   </div>
 </template>
@@ -22,6 +22,15 @@ export default {
     return {
       todos: []
     }
+  },
+  created() {
+    let localTodos = JSON.parse(localStorage.getItem('todos'))
+    if ( localTodos ) {
+      this.todos = localTodos
+    }
+  },
+  updated() {
+    localStorage.setItem('todos', JSON.stringify(this.todos))
   }
 }
 
@@ -31,6 +40,14 @@ export default {
 
 .toDoList {
   background-color: #fafafa;
+}
+
+.todosContainer {
+  @include tablet {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 </style>

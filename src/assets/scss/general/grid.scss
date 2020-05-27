@@ -1,3 +1,6 @@
 .grid {
   padding: 0 20px;
+  @include desktop-small {
+    padding: 0 100px;
+  }
 }

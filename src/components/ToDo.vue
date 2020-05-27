@@ -39,6 +39,13 @@ export default {
     box-shadow: 3px 5px 11px -2px rgba(0, 0, 0, 0.65);
     border-radius: 5px;
     margin-bottom: 20px;
+    @include tablet {
+      width: 300px;
+      margin-right: 10px;
+    }
+    @include desktop {
+      width: calc(100% / 3 - 50px)
+    }
   }
 
   .isDone {
