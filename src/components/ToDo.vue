@@ -2,14 +2,14 @@
   <div :class="this.content.isDone ? this.$style.isDone + ' ' + this.$style.toDo : this.$style.toDo">
     <h3 :class="$style.title">{{ content.title }}</h3>
     <p :class="$style.description">{{ content.description }}</p>
-    <button class="inputSubmit" @click="isDone">{{ content.isDone ? '✔ DONE' : '✘ NOT DONE' }}</button>
+    <form v-if="isActive" @submit.prevent="rewriteTodo">
+      <input :class="$style.inputText" v-model="content.title" type="text">
+      <input :class="$style.inputText" v-model="content.description" type="text">
+      <button class="inputSubmit">UPDATE</button>
+    </form>
+    <button v-if="!isActive" class="inputSubmit" @click="isDone">{{ content.isDone ? '✔ DONE' : '✘ NOT DONE' }}</button>
     <span :class="$style.close" @click="deleteTodo">❌</span>
     <span :class="$style.rewrite" @click="isActive ? isActive = false : isActive = true">✏️</span>
-    <form v-if="isActive" @submit.prevent="rewriteTodo">
-      <input v-model="newTitle" type="text">
-      <input v-model="newDescription" type="text">
-      <button>UPDATE</button>
-    </form>
   </div>
 </template>
 
@@ -22,9 +22,7 @@ export default {
   },
   data() {
     return {
-      isActive: false,
-      newTitle: this.content.title,
-      newDescription: this.content.description
+      isActive: false
     }
   },
   created() {
@@ -41,8 +39,8 @@ export default {
       this.$emit('deleteTodo', content)
     },
     rewriteTodo(e) {
-      const { content, newTitle, newDescription } = this
-      this.$emit('rewriteTodo', {id: content.id, newTitle, newDescription})
+      const { content } = this
+      this.$emit('rewriteTodo', content)
       this.isActive = false
     }
   }
@@ -53,8 +51,9 @@ export default {
 <style lang="scss" module>
 
   .toDo {
-  position: relative;
+    position: relative;
     width: calc(100% - 30px);
+    height: 100%;
     border: 2px solid rgb(130, 161, 16);
     padding: 15px;
     box-shadow: 3px 5px 11px -2px rgba(0, 0, 0, 0.65);
@@ -131,6 +130,29 @@ export default {
   &:hover {
     opacity: 1;
   }
+}
+
+.inputText {
+    width: calc(100% - 17px);
+    height: 30px;
+    border: 2px solid rgb(130, 161, 16);
+    border-radius: 3px;
+    transition: .2s;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    font-family: 'RobotoRegular';
+    font-size: 16px;
+
+    &:focus {
+      outline: none;
+      border-width: 3px;
+      box-shadow: 4px 4px 13px -6px rgba(0,0,0,0.74);
+    }
+
+    &::placeholder {
+      text-transform: uppercase;
+      font-size: 14px;
+    }
 }
 
 </style>

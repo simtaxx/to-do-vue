@@ -31,6 +31,7 @@ h1 {
   font-size: 16px;
   color:rgb(130, 161, 16);
   cursor: pointer;
+  margin-bottom: 10px;
   transition: .2s;
   @include desktop {
     height: 40px;

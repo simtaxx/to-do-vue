@@ -75,7 +75,7 @@ export default {
 
     &::placeholder {
       text-transform: uppercase;
-    font-size: 14px;
+      font-size: 14px;
     }
   }
 

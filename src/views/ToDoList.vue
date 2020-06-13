@@ -50,9 +50,7 @@ export default {
     rewriteTodo(currentTodo) {
       this.todos = this.todos.filter(todo => {
         if (todo.id === currentTodo.id) {
-          todo.description = currentTodo.newDescription
-          todo.title = currentTodo.newTitle
-          return todo
+          return currentTodo
         } else return todo
       })
       localStorage.setItem('todos', JSON.stringify(this.todos))
