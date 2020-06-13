@@ -23,7 +23,7 @@ export default {
   methods: {
     addTodo() {
       const { title, description } = this
-      this.$emit('addTodo', {title, description, isDone: false })
+      this.$emit('addTodo', {title, description, isDone: false, id: null })
     }
   }
 }

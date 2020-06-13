@@ -1,27 +1,31 @@
 <template>
-  <div :class="this.isDone ? this.$style.isDone + ' ' + this.$style.toDo : this.$style.toDo">
+  <div :class="this.content.isDone ? this.$style.isDone + ' ' + this.$style.toDo : this.$style.toDo">
     <h3 :class="$style.title">{{ content.title }}</h3>
     <p :class="$style.description">{{ content.description }}</p>
-    <button class="inputSubmit" @click="isDone = isDone ? false : true">{{ isDone ? '✔ DONE' : '✘ NOT DONE' }}</button>
-    <span :class="$style.close" @click="getDeleted">❌</span>
+    <button class="inputSubmit" @click="isDone">{{ content.isDone ? '✔ DONE' : '✘ NOT DONE' }}</button>
+    <span :class="$style.close" @click="deleteTodo">❌</span>
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'createToDo',
+  name: 'ToDo',
   props: {
     content: { type: Object, required: true }
   },
-  data() {
-    return {
-      isDone: this.content.isDone 
-    }
+  created() {
+    this.content.id = this._uid
   },
   methods: {
-    getDeleted() {
-      this.$emit('getDeleted')
+    isDone() {
+      this.content.isDone  ? this.content.isDone  = false : this.content.isDone = true
+      const { content } = this
+      this.$emit('isDone', content)
+    },
+    deleteTodo() {
+      const { content } = this
+      this.$emit('deleteTodo', content)
     }
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <div :class="$style.toDoList" class="grid">
     <h1>TO DO LIST</h1>
-    <CreateToDo @addTodo="todos.push($event)" />
+    <CreateToDo @addTodo="createToDo" />
     <div :class="$style.todosContainer">
-      <ToDo v-for="(todo, index) in todos" :key="index" :content="todo" @getDeleted="deleteToDo(index)" />
+      <ToDo v-for="(todo, index) in todos" :key="index" :index="index" :content="todo" @isDone="isDone" @deleteTodo="deleteTodo"/>
     </div>
   </div>
 </template>
@@ -20,7 +20,8 @@ export default {
   },
   data() {
     return {
-      todos: []
+      todos: [],
+      newIndex: null
     }
   },
   created() {
@@ -29,12 +30,22 @@ export default {
       this.todos = localTodos
     }
   },
-  updated() {
-    localStorage.setItem('todos', JSON.stringify(this.todos))
-  },
   methods: {
-    deleteToDo(index) {
-      this.todos.splice(index, 1)
+    createToDo(event) {
+      this.todos.push(event)
+      localStorage.setItem('todos', JSON.stringify(this.todos))
+    },
+    isDone(currentTodo) {
+      this.todos = this.todos.filter(todo => {
+        if (todo.id === currentTodo.id) {
+          return currentTodo
+        } else return todo
+      })
+      localStorage.setItem('todos', JSON.stringify(this.todos))
+    },
+    deleteTodo(currentTodo) {
+      this.todos = this.todos.filter(todo => todo.id !== currentTodo.id)
+      localStorage.setItem('todos', JSON.stringify(this.todos))
     }
   }
 }
