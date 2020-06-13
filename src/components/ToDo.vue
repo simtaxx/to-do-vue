@@ -4,6 +4,12 @@
     <p :class="$style.description">{{ content.description }}</p>
     <button class="inputSubmit" @click="isDone">{{ content.isDone ? '✔ DONE' : '✘ NOT DONE' }}</button>
     <span :class="$style.close" @click="deleteTodo">❌</span>
+    <span :class="$style.rewrite" @click="isActive ? isActive = false : isActive = true">✏️</span>
+    <form v-if="isActive" @submit.prevent="rewriteTodo">
+      <input v-model="newTitle" type="text">
+      <input v-model="newDescription" type="text">
+      <button>UPDATE</button>
+    </form>
   </div>
 </template>
 
@@ -13,6 +19,13 @@ export default {
   name: 'ToDo',
   props: {
     content: { type: Object, required: true }
+  },
+  data() {
+    return {
+      isActive: false,
+      newTitle: this.content.title,
+      newDescription: this.content.description
+    }
   },
   created() {
     this.content.id = this._uid
@@ -26,6 +39,11 @@ export default {
     deleteTodo() {
       const { content } = this
       this.$emit('deleteTodo', content)
+    },
+    rewriteTodo(e) {
+      const { content, newTitle, newDescription } = this
+      this.$emit('rewriteTodo', {id: content.id, newTitle, newDescription})
+      this.isActive = false
     }
   }
 }
@@ -88,36 +106,25 @@ export default {
     margin-bottom: 20px;
     color: rgb(130, 161, 16);
   }
-  
-  .inputDelete {
-  width: 100%;
-  border: 2px solid rgb(152, 41, 33);
-  background-color: rgb(152, 41, 33);
-  border-radius: 3px;
-  font-family: 'RobotoBold';
-  font-size: 16px;
-  color:#fafafa;
-  cursor: pointer;
-  transition: .2s;
-  @include desktop {
-    height: 40px;
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &:hover {
-    color: rgb(152, 41, 33);
-    background-color: #fafafa;
-  }
-}
 
 .close {
   opacity: .4;
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 14px;
+  cursor: pointer;
+  transition: .2s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.rewrite {
+  opacity: .4;
+  position: absolute;
+  top: 10px;
+  left: 14px;
   cursor: pointer;
   transition: .2s;
 

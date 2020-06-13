@@ -3,7 +3,7 @@
     <h1>TO DO LIST</h1>
     <CreateToDo @addTodo="createToDo" />
     <div :class="$style.todosContainer">
-      <ToDo v-for="(todo, index) in todos" :key="index" :index="index" :content="todo" @isDone="isDone" @deleteTodo="deleteTodo"/>
+      <ToDo v-for="(todo, index) in todos" :key="index" :index="index" :content="todo" @isDone="isDone" @deleteTodo="deleteTodo" @rewriteTodo="rewriteTodo"/>
     </div>
   </div>
 </template>
@@ -45,6 +45,16 @@ export default {
     },
     deleteTodo(currentTodo) {
       this.todos = this.todos.filter(todo => todo.id !== currentTodo.id)
+      localStorage.setItem('todos', JSON.stringify(this.todos))
+    },
+    rewriteTodo(currentTodo) {
+      this.todos = this.todos.filter(todo => {
+        if (todo.id === currentTodo.id) {
+          todo.description = currentTodo.newDescription
+          todo.title = currentTodo.newTitle
+          return todo
+        } else return todo
+      })
       localStorage.setItem('todos', JSON.stringify(this.todos))
     }
   }
